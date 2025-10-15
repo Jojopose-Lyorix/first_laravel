@@ -1,5 +1,3 @@
-
-
 /* Ce fichier CSS reset est utilisé : https://cdn.githubraw.com/elad2412/the-new-css-reset/main/css/reset.css */
 
 /* On active la grille de 2 colonnes quand le point de rupture est atteint */
@@ -24,7 +22,6 @@
 /* Bonus : Toute la hauteur ? */
  .website {min-height: 100vh;}
 
- h1 {text-align: center;}
 /* Bonus : Centré ? */
  .website {max-width: 800px; margin: 0 auto;}
 
@@ -82,3 +79,78 @@ a {
 
 /* Vos styles ici */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+  }
+  
+  .wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+    }
+ header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap :nowrap;
+  padding: 1.5em 3.45em;
+ }
+ header nav{
+  padding: 0em 5em;
+ }
+header a{
+  text-decoration: none;
+  color: white;
+  margin-left: 30px;
+}
+header a:hover{
+  text-decoration: underline;
+}
+.headerBlack {
+    background-color:black!important ;
+    color: white!important ;
+    width : 100vw;
+    top : 0;
+  }
+/* Menu burger caché par défaut */
+.bouton_menu_header {
+  display: none;
+}
+
+/* Media query : menu classique masqué, menu burger affiché en mobile */
+@media (max-width: 900px) {
+  .menu_header {
+    display: none;
+  }
+
+  .bouton_menu_header {
+    display: inline;
+  }
+
+  header {
+    padding: 0.5em 1em; /* Réduction du padding haut/bas */
+  }
+}
+
+  .titreHeader{
+    text-align: center!important ;
+     padding-left: 10em!important ;
+     color: white!important;
+ }
+ p{
+    color: black !important;;
+ }

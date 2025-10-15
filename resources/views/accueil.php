@@ -6,7 +6,8 @@
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Concours de Robots 2025</title>
-  <link rel="stylesheet" href="./css/styles.css" media="all">
+  <link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="./css/pico.css">
 </head>
 
 <body>
@@ -41,8 +42,8 @@
     <p>Utilisez les boutons ci-dessous pour accéder rapidement aux principales fonctions :</p>
 
     <div class="actions">
-      <a class="btn" href="equipes/ajouter">➕ Ajouter une équipe</a></br>
-      <a class="btn" href="eleves/ajouter">👤 Ajouter un élève</a></br>
+      <a class="btn" href="ajout_eleve">➕ Ajouter une équipe</a></br>
+      <a class="btn" href="ajout_eleve">👤 Ajouter un élève</a></br>
       <a class="btn" href="epreuves/ajouter">⚙️ Ajouter une épreuve</a></br>
       <a class="btn" href="resultats/saisie">✍️ Saisir des résultats</a></br>
       <a class="btn" href="resultats/classement">📊 Voir les classements</a></br>

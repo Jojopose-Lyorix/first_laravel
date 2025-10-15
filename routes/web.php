@@ -1,20 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
 
+Route::view('/', 'accueil');
 
-Route::get('/test', [TestController::class, 'index']);
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
 
-Route::get('/', function () {
-    return view('acceuil');
+Route::view('ajout_eleve', 'ajout_eleve')
+    
+    ->name('ajout_eleve');
+    
+
+Route::get('/hello', function(){
+return 'Bonjour le monde!';
 });
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/mention', function () {
-    return view('mention');
-});
+require __DIR__.'/auth.php';
