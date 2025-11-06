@@ -2,18 +2,39 @@
 
 namespace App\Models;
 
-use App\Models\Base\Utilisateur as BaseUtilisateur;
+use Illuminate\Database\Eloquent\Model;
 
-class Utilisateur extends BaseUtilisateur
+class Utilisateur extends Model
 {
-	protected $fillable = [
-		'nom',
-		'prenom',
-		'classe',
-		'commentaire',
-		'code_statut',
-		'code_genre',
-		'id_college',
-		'id_equipe'
-	];
+    // ✅ Nom correct de la table
+    protected $table = 'utilisateurs';
+    
+    protected $primaryKey = 'id';
+    
+    // ✅ Pas d'auto-increment car l'id vient de mcd_users
+    public $incrementing = false;
+    
+    protected $keyType = 'int';
+    
+    // ✅ Toutes les colonnes qui peuvent être remplies
+    protected $fillable = [
+        'id',
+        'nom',
+        'prenom',
+        'classe',
+        'code_genre',
+        'code_statut',
+        'id_college',
+        'id_equipe',
+        'commentaire',
+    ];
+    
+    // ✅ La table a bien created_at et updated_at
+    public $timestamps = true;
+    
+    // Relation avec User
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'id');
+    }
 }

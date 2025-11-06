@@ -20,14 +20,7 @@
   <!-- Barre latérale -->
   <aside class="aside">
     <nav class="navigation" role="navigation">
-      <ul class="navigation-list">
-        <li class="navigation-item"><a class="navigation-link" href="/">🏠 Accueil</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="equipes">👥 Équipes</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="epreuves">🤖 Épreuves</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="resultats">🏆 Résultats</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="informations">ℹ️ Infos pratiques</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="mention">📜 Mentions légales</a></li>
-      </ul>
+      
     </nav>
     <p>
       Bienvenue dans l’application du <strong>Concours de Robots 2025</strong>.  
@@ -44,7 +37,7 @@
     <div class="actions">
       <a class="btn" href="ajout_eleve">➕ Ajouter une équipe</a></br>
       <a class="btn" href="ajout_eleve">👤 Ajouter un élève</a></br>
-      <a class="btn" href="epreuves/ajouter">⚙️ Ajouter une épreuve</a></br>
+      <a class="btn" href="modification_eleve">⚙️ Ajouter une épreuve</a></br>
       <a class="btn" href="resultats/saisie">✍️ Saisir des résultats</a></br>
       <a class="btn" href="resultats/classement">📊 Voir les classements</a></br>
     </div>

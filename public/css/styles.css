@@ -30,12 +30,14 @@ body {
   margin: 0;
   font-size: 1rem;
   background-color: #fff;
-  color: #212529;
+  color: #000000;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
 }
 
 /* Decoration optionnelle (juste pour la demo) */
+
+ 
 ul {
   background: #bbb;
   padding: 1rem;
@@ -48,11 +50,11 @@ article {
   padding: 1rem;
 }
 [class*="grid"] > * {
-  background: #ccc;
+  background: #000000;
   padding: 1rem;
 }
 header, footer {
-  background: #ddd;
+  background: #000000;
   padding: 1rem;
 }
 main {
