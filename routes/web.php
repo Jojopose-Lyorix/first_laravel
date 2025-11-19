@@ -21,18 +21,18 @@ Route::get('/colleges/equipe', [PageController::class, 'equipe'])->name('college
 Route::view('profile', 'profile')->name('profile');
 
 // Formulaire d'ajout d'un élève (sans auth)
-Route::get('ajout_eleve', [GestionEleveController::class, 'create'])->name('ajout_eleve');
-Route::post('ajout_eleve', [GestionEleveController::class, 'store'])->name('ajout_eleve.store');
+Route::get('ajout_eleve', [GestionEleveController::class, 'create'])->middleware(['prof'])->name('ajout_eleve');
+Route::post('ajout_eleve', [GestionEleveController::class, 'store'])->middleware(['prof'])->name('ajout_eleve.store');
 
 // Liste des élèves
-Route::get('/colleges/eleves', [GestionEleveController::class, 'consulter'])->name('colleges.eleves');
-Route::post('/colleges/eleves', [GestionEleveController::class, 'delete'])->name('gestion_eleve.delete');
+Route::get('/colleges/eleves', [GestionEleveController::class, 'consulter'])->middleware(['prof'])->name('colleges.eleves');
+Route::post('/colleges/eleves', [GestionEleveController::class, 'delete'])->middleware(['prof'])->name('gestion_eleve.delete');
 
 
 
 // Formulaire de modification d'un élève (sans auth)
-Route::get('modification_eleve/{eleve}', [GestionEleveController::class, 'edit'])->name('modification_eleve');
-Route::put('modification_eleve/{eleve}', [GestionEleveController::class, 'update'])->name('modification_eleve.update');
+Route::get('modification_eleve/{eleve}', [GestionEleveController::class, 'edit'])->middleware(['prof'])->name('modification_eleve');
+Route::put('modification_eleve/{eleve}', [GestionEleveController::class, 'update'])->middleware(['prof'])->name('modification_eleve.update');
 // Épreuves
 Route::get('/epreuves', [PageController::class, 'epreuves'])->name('epreuves.index');
 

@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'concour.enCours' => \App\Http\Middleware\CheckConcourEnCours::class,
             'gestionnaire' => \App\Http\Middleware\RoleGestionnaire::class,
             'admin' => \App\Http\Middleware\RoleAdministrateur::class,
+            'prof' => \App\Http\Middleware\RoleProf::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
