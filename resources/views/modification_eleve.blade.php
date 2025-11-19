@@ -9,7 +9,7 @@
 
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="/css/pico.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -47,8 +47,8 @@
                             <select id="genre" name="genre" required>
                                 <option value="">Sélectionner</option>
                                 <option value="F" {{ old('genre', $eleve->code_genre) == 'F' ? 'selected' : '' }}>Féminin</option>
-                                <option value="M" {{ old('genre', $eleve->code_genre) == 'M' ? 'selected' : '' }}>Masculin</option>
-                                <option value="Autre" {{ old('genre', $eleve->code_genre) == 'Autre' ? 'selected' : '' }}>Autre</option>
+                                <option value="H" {{ old('genre', $eleve->code_genre) == 'H' ? 'selected' : '' }}>Masculin</option>
+                                <option value="I" {{ old('genre', $eleve->code_genre) == 'I' ? 'selected' : '' }}>Autre</option>
                             </select>
                         </div>
 

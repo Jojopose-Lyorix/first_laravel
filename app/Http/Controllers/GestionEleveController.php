@@ -7,6 +7,8 @@ use Illuminate\View\View;
 use App\Models\User;
 use App\Models\Utilisateur;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 
 class GestionEleveController extends Controller
 {
@@ -30,39 +32,61 @@ class GestionEleveController extends Controller
 
     // Mise à jour de l'élève
     public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:50',
-            'prenom' => 'required|string|max:50',
-            'classe' => 'required|string|max:10',
-            'genre' => 'required|string|in:F,H,I',
-            'email' => 'required|email',
-        ]);
+{
+    $validated = $request->validate([
+        'nom' => 'required|string|max:50',
+        'prenom' => 'required|string|max:50',
+        'classe' => 'required|string|max:10',
+        'genre' => 'required|string|in:F,H,I',
+        'email' => 'required|email',
+    ]);
 
-        $eleve = Utilisateur::findOrFail($id);
-        $user = $eleve->user;
+    // === TABLE users ===
+    $user = User::findOrFail($id);
+    $user->update([
+        'name'  => $request->nom . ' ' . $request->prenom,
+        'email' => $request->email,
+    ]);
 
-        // Mettre à jour le User et l'Utilisateur
-        if ($user) {
-            $user->update(['email' => $validated['email']]);
-        }
+    // === TABLE utilisateurs ===
+    $utilisateur = Utilisateur::findOrFail($id);
+    $utilisateur->update([
+        'nom'         => $request->nom,
+        'prenom'      => $request->prenom,
+        'classe'      => $request->classe,
+        'code_genre'  => $request->genre,
+        'commentaire' => $request->email,
+    ]);
 
-        $eleve->update([
-            'nom' => $validated['nom'],
-            'prenom' => $validated['prenom'],
-            'classe' => $validated['classe'],
-            'code_genre' => $validated['genre'],
-        ]);
+    return redirect()->route('consulter')
+                     ->with('success', 'Élève modifié avec succès !');
+}
 
-        return redirect()->route('consultation_eleve')
-                         ->with('success', 'Élève modifié avec succès !');
-    }
 
     // Formulaire d'ajout
     public function create(): View
     {
         return view('ajout_eleve');
     }
+
+
+    
+    public function delete(Request $request)
+{
+     $id = $request->input('delete_id');
+   try {
+        // Appelle la méthode statique du modèle User pour supprimer l'élève
+        User::delete_eleve($id);
+
+        $message = 'Élève supprimé avec succès.';
+        $status = 'success';
+    } catch (\Exception $e) {
+        $message = 'Erreur lors de la suppression : ' . $e->getMessage();
+        $status = 'error';
+    }
+    // Un seul return à la fin
+    return redirect()->back()->with($status, $message);
+}
 
     // Stockage d'un nouvel élève
     public function store(Request $request)
@@ -77,23 +101,27 @@ class GestionEleveController extends Controller
 
         $password = Str::random(10);
 
-        $user = User::create([
-            'name' => $validated['prenom'] . ' ' . $validated['nom'],
-            'email' => $validated['email'],
-            'password' => bcrypt($password),
-        ]);
+        $email = $validated['email'];
+        $nom = $validated['nom'] . ' ' . $validated['prenom'];
+        $password = password_hash($password, PASSWORD_BCRYPT);
 
-        Utilisateur::create([
-            'id' => $user->id,
-            'nom' => $validated['nom'],
-            'prenom' => $validated['prenom'],
-            'classe' => $validated['classe'],
-            'code_genre' => $validated['genre'],
-            'code_statut' => 'N',
-            'id_college' => 1000,
-            'id_equipe' => null,
-            'commentaire' => $validated['email'],
-        ]);
+        $id = User::create_eleve($nom, $email, $password);
+        
+
+ 
+        
+        
+        $nom = $validated['nom'];
+        $prenom = $validated['prenom'];
+        $classe = $validated['classe'];
+        $genre = $validated['genre'];
+        $statut = 'N';
+        $id_college = 1000;
+        $id_equipe = null;
+        $com = $validated['email'];
+        Utilisateur::create_eleve($id, $nom, $prenom, $classe, $genre, $statut, $id_college, $id_equipe, $com);
+
+
 
         return redirect()->route('consulter')
                          ->with('success', 'Élève ajouté avec succès ! ');

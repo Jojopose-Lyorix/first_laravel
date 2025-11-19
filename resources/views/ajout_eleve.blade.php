@@ -8,7 +8,7 @@
   
   <!-- Feuilles de style -->
   <link rel="stylesheet" href="/css/pico.css">
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>

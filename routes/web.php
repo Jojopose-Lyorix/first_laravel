@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GestionEleveController;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\AutoInscriptionsController;
+use App\Http\Controllers\PageController;
 // Accueil
 Route::view('/', 'accueil')->name('accueil');
 
@@ -18,7 +20,8 @@ Route::post('ajout_eleve', [GestionEleveController::class, 'store'])->name('ajou
 
 // Liste des élèves
 Route::get('gestion_eleve', [GestionEleveController::class, 'consulter'])
-    ->name('consulter');
+->name('consulter');
+Route::post('/gestion_eleve', [GestionEleveController::class, 'delete'])->name('gestion_eleve.delete');
 
 
 // Formulaire de modification d'un élève (sans auth)
@@ -29,5 +32,91 @@ Route::put('modification_eleve/{eleve}', [GestionEleveController::class, 'update
 Route::get('/hello', function () {
     return 'Bonjour le monde!';
 });
+// --- Pages principales ---
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/mentions', [PageController::class, 'mentions'])->name('mentions');
 
-require __DIR__.'/auth.php';
+// --- Préinscription ---
+Route::get('/preinscription', [PageController::class, 'create'])->name('preinscription');
+Route::post('/preinscription', [AutoInscriptionsController::class, 'store'])->name('preinscription.store');
+
+// --- Lien de vérification email ---
+Route::get('/email/verify', [PageController::class, 'lien_verif_email_envoye'])
+    ->middleware('auth')->name('verification.notice');
+
+// --- Inscription ---
+// 1) En cliquant sur le lien du mail -> vérif du mail
+Route::get(
+    '/email/verify/{id}/{hash}',
+    [PageController::class, 'email_verification']
+)->middleware(['auth', 'signed'])->name('verification.verify');
+
+// 2) Afficher le formulaire d'inscription après la vérif
+Route::get('/inscription', [PageController::class, 'inscription'])
+    ->middleware(['auth', 'verified'])
+    ->name('inscription');
+
+// 3) En validant le formulaire d'inscription
+Route::post('/inscription', [AutoInscriptionsController::class, 'inscription'])
+    ->name('inscription.store');
+
+// --- Renvoyer la vérification d'email ---
+Route::post('/email/verification-notification', [AutoInscriptionsController::class, 'renvoyer_lien_verif_email'])
+    ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+// Page "mot de passe oublié" (entrée)
+Route::get('/forgot-password', function () {
+    return view('livewire.pages.auth.reset-password');
+})->middleware('guest')->name('password.request');
+
+// Collèges
+Route::get('/colleges/eleves', [PageController::class, 'eleves'])->name('colleges.eleves');
+Route::get('/colleges/equipe', [PageController::class, 'equipe'])->name('colleges.equipe');
+
+// Épreuves
+Route::get('/epreuves', [PageController::class, 'epreuves'])->name('epreuves.index');
+
+// Classement
+Route::get('/classement', [PageController::class, 'classement'])->name('classement.index');
+
+// Édition
+Route::get('/edition/2024', [PageController::class, 'show2024'])->name('edition.2024');
+Route::get('/edition/2025', [PageController::class, 'show2025'])->name('edition.2025');
+
+// Saisie Note
+Route::get('/saisie-note', [PageController::class, 'saisie_note'])->name('saisieNote.index');
+
+// Page Gestion
+Route::prefix('gestion')->group(function () {
+    Route::get('/epreuves', [PageController::class, 'epreuves'])->name('gestion.epreuves');
+    Route::get('/colleges', [PageController::class, 'colleges'])->name('gestion.colleges');
+    Route::get('/abonnement', [PageController::class, 'abonnement'])->name('gestion.abonnement');
+    Route::post('/abonnement', [PageController::class, 'confirmer_auto_abo'])->name('gestion.confirmer_auto_abo');
+    Route::get('/role', [PageController::class, 'role'])->name('gestion.role');
+    Route::get('/edition', [PageController::class, 'edition'])->name('gestion.edition');
+    Route::get('/exportation', [PageController::class, 'exportation'])->name('gestion.exportation');
+    Route::get('/modification', [PageController::class, 'modification'])->name('gestion.modification');
+});
+
+// Page Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/genre', [PageController::class, 'genre'])->name('admin.genre');
+    Route::get('/pays', [PageController::class, 'pays'])->name('admin.pays');
+    Route::get('/utilisateurs', [PageController::class, 'utilisateurs'])->name('admin.utilisateurs');
+});
+
+// --- Pages protégées ---
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+// --- Collèges ---
+Route::get('/colleges/eleves', [PageController::class, 'eleves'])->name('colleges.eleves');
+Route::get('/colleges/equipe', [PageController::class, 'equipe'])->name('colleges.equipe');
+
+require __DIR__ . '/auth.php';
+
