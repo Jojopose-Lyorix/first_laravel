@@ -103,10 +103,9 @@ class GestionEleveController extends Controller
 
         $email = $validated['email'];
         $nom = $validated['nom'] . ' ' . $validated['prenom'];
-        $password = password_hash($password, PASSWORD_BCRYPT);
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        $id = User::create_eleve($nom, $email, $password);
-        
+        $id = User::create_eleve($nom, $email, $hashed_password);
 
  
         
@@ -118,7 +117,7 @@ class GestionEleveController extends Controller
         $statut = 'N';
         $id_college = 1000;
         $id_equipe = null;
-        $com = $validated['email'];
+        $com = $password; // Stocke le mot de passe temporaire dans le commentaire
         Utilisateur::create_eleve($id, $nom, $prenom, $classe, $genre, $statut, $id_college, $id_equipe, $com);
 
 
