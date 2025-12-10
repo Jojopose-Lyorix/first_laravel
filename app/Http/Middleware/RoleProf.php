@@ -26,8 +26,8 @@ class RoleProf
             abort(403, 'Accès interdit');
         }
 
-        // Prof = 50
-        if (!in_array((int)$role, [50, 90])) {
+        // Prof = 30
+        if (!in_array((int)$role, [30, 90])) {
     abort(403, 'Accès réservé aux administrateurs et aux enseignants');
 }
 
