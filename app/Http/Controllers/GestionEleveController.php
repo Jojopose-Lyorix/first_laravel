@@ -58,7 +58,7 @@ class GestionEleveController extends Controller
         'commentaire' => $request->email,
     ]);
 
-    return redirect()->route('consulter')
+    return redirect()->route('colleges.eleves')
                      ->with('success', 'Élève modifié avec succès !');
 }
 
