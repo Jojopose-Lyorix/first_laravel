@@ -13,11 +13,17 @@ use Illuminate\Support\Facades\DB;
 class GestionEleveController extends Controller
 {
     // Liste des élèves
-    public function consulter(): View
-    {
-        $eleves = Utilisateur::whereIn('code_statut', ['N', 'A'])->get();
-        return view('colleges.eleves', compact('eleves'));
-    }
+    public function consulter()
+{
+    $enseignant = auth()->user();
+
+    $eleves = Utilisateur::where('id_college', $enseignant->id_college)
+        ->whereIn('code_statut', ['N', 'A'])
+        ->get();
+
+    return view('colleges.eleves', compact('eleves'));
+}
+
 
     // Formulaire de modification
     public function edit($id): View

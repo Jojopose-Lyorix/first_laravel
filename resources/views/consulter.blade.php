@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="light">
-
+@section('title', 'Liste des élèves')
 <head>
     <meta charset="UTF-8">
     <title>Liste des élèves</title>
@@ -10,9 +10,12 @@
 
 <body>
     @include('includes.header')
+    
 
     <main>
         <h1>Élèves inscrits</h1>
+
+        
 
         <!-- Messages -->
         @if(session('success'))
